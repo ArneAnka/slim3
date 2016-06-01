@@ -8,7 +8,11 @@ class Auth
 {
     public function user()
     {
-        return User::find($_SESSION['user']);
+        if(!empty($_SESSION['user']))
+        {
+            return User::find($_SESSION['user']);
+        }
+        return null;
     }
 
     public function check()

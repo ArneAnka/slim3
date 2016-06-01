@@ -18,9 +18,9 @@ return [
 
         // Database
         'db' => [
-            'driver' => 'mysql',
+            'driver' => 'sqlite', // mysql or sqlite
             'host' => 'localhost', // To change port, just add it afterwards like localhost:8889
-            'database' => 'test2',
+            'database' => 'resources/database.sqlite', // DB name or SQLite path
             'username' => 'slim',
             'password' => 'CZvH5nrpjJtTzcAq',
             'charset' => 'utf8mb4',

@@ -15,6 +15,8 @@ Users can sign-up and sign-in.
 1. `$ cd slim3` (the root of the git clone)
 2. `$ php -S 0.0.0.0:8888 -t public public/index.php`
 3. Browse to http://localhost:8888
+4. Login as John Doe, email: demo@demo.com and password 123
+5. Or as John Smith, email: demo2@demo.com and password 123
 
 ## Key directories
 

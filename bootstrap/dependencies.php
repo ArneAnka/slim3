@@ -21,7 +21,7 @@ $container['flash'] = function ($container) {
 };
 
 $container['view'] = function ($container) {
-    $view = new Slim\Views\Twig($container['settings']['view']['template_path'], $container['settings']['view']['twig']);
+    $view = new \Slim\Views\Twig($container['settings']['view']['template_path'], $container['settings']['view']['twig']);
 
     // Add extensions
     $view->addExtension(new \Slim\Views\TwigExtension(
@@ -35,7 +35,7 @@ $container['view'] = function ($container) {
         'check' => $container->auth->check(),
         'user' => $container->auth->user(),
     ]);
-    
+
     $view->getEnvironment()->addGlobal('flash', $container->flash);
 
     return $view;
@@ -53,7 +53,7 @@ $container['view'] = function ($container) {
 // };
 
 $container['validator'] = function ($container) {
-    return new App\Validation\Validator;
+    return new \App\Validation\Validator;
 };
 
 $container['HomeController'] = function ($container) {
@@ -71,6 +71,5 @@ $container['PasswordController'] = function ($container) {
 $container['csrf'] = function ($container) {
     return new \Slim\Csrf\Guard;
 };
-
 
 v::with('App\\Validation\\Rules\\');
