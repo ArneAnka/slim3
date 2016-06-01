@@ -1,0 +1,101 @@
+{% extends 'templates/app.twig' %}
+{% block title %}Homepage{% endblock %}
+
+{% block content %}
+
+  <div class="jumbotron">
+  <h1>Hello, world!</h1>
+  <p>This is a example of a TwigExtension: {{ diffForHumans("2016-06-01 16:07:46") }}</p>
+  <p>Under "App/TwigExtension" you can have a look at the "diffForHumans" extension.</p>
+  <p>And that function in then to be found in "App/helper.php". Don´t forget to add the extension in "bootstrap/dependencies.php". Like so: "$view->addExtension (new App\TwigExtension\diffForHumans());"</p>
+  <hr>
+  <p>But it you just are looking for something to configure, this is the structure:</p>
+  <pre>
+├── README.md
+├── _installation <b>* Contains SQL file</b>
+├── app
+│   ├── Auth
+│   │   └── Auth.php
+│   ├── Controllers
+│   │   ├── Auth
+│   │   │   ├── AuthController.php
+│   │   │   └── PasswordController.php
+│   │   ├── Controller.php
+│   │   └── HomeController.php
+│   ├── Helper.php
+│   ├── Middleware
+│   │   ├── AuthMiddleware.php
+│   │   ├── CsrfViewMiddleware.php
+│   │   ├── GuestMiddleware.php
+│   │   ├── Middleware.php
+│   │   ├── OldInputMiddleware.php
+│   │   └── ValidationErrorsMiddleware.php
+│   ├── Models
+│   │   └── User.php
+│   ├── TwigExtension
+│   │   └── diffForHumans.php <b>* Example of how to extend Twig</b>
+│   ├── Validation
+│   │   ├── Exceptions
+│   │   │   ├── EmailAvailableException.php
+│   │   │   └── MatchesPasswordException.php
+│   │   ├── Rules
+│   │   │   ├── EmailAvailable.php
+│   │   │   └── MatchesPassword.php
+│   │   └── Validator.php
+│   └── routes.php
+├── bootstrap
+│   ├── dependencies.php <b>* Slim configuration file</b>
+│   ├── middleware.php <b>* Middleware for Slim</b>
+│   └── settings.php <b>* Settings file for Slim</b>
+├── cache
+│   └── twig 
+├── composer.json
+├── composer.lock
+├── public <b>* Public directory</b>
+│   ├── css
+│   │   └── app.css
+│   └── index.php
+├── resources <b>* Your views</b>
+│   └── views
+│       ├── auth
+│       │   ├── password
+│       │   │   └── change.twig
+│       │   ├── signin.twig
+│       │   └── signup.twig
+│       ├── home.twig
+│       └── templates
+│           ├── app.twig
+│           └── partials
+│               ├── flash.twig
+│               └── navigation.twig
+└── vendor
+</pre>
+</div>
+
+<div class="jumbotron">
+	<h2>Boilerplate Progress</h2>
+	<ul>
+		<li><s>File structure</s></li>
+		<li><s>Separate settings file</s></li>
+		<li>FluentPDO insted of Eloquent(?)</li>
+		<li>Dashboard
+			<ul>
+				<li>Simple CRUD example</li>
+			</ul>
+		</li>
+		<li>Admin area
+			<ul>
+				<li>View all user</li>
+				<li>Soft delete user</li>
+				<li>Ban user</li>
+			</ul>
+		</li>
+	</ul>
+<div class="progress">
+  <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
+    <span class="sr-only">40% Complete (success)</span>
+  </div>
+</div>
+</div>
+
+{% endblock %}
