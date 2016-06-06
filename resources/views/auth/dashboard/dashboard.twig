@@ -1,0 +1,13 @@
+{% extends 'templates/app.twig' %}
+{% block title %}Homepage{% endblock %}
+
+{% block content %}
+
+<div class="jumbotron">
+	<h2>This is the Dashboard, only visibel for signed-in user.</h2>
+	<h3>You are signed in as: {{ auth.user.user_name }}</h3>
+	<p>Try to sign-out, then visit {{ base_url() }}/dashboard</p>
+
+</div>
+
+{% endblock %}

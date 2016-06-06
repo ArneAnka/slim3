@@ -68,8 +68,21 @@ $container['PasswordController'] = function ($container) {
     return new \App\Controllers\Auth\PasswordController($container);
 };
 
+// $container['csrf'] = function ($container) {
+//     return new \Slim\Csrf\Guard;
+// };
+
+/**
+* Throw a "Method not allowed" error message if CSRF check fails.
+* This can be custom. HAve a look on how to make a custom 404 page, in dependencies.php
+*/
 $container['csrf'] = function ($container) {
-    return new \Slim\Csrf\Guard;
+    $guard = new \Slim\Csrf\Guard();
+    $guard->setFailureCallable(function ($request, $response, $next) {
+        $request = $request->withAttribute("csrf_status", false);
+        return $next($request, $response);
+    });
+    return $guard;
 };
 
 v::with('App\\Validation\\Rules\\');

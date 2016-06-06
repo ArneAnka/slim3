@@ -8,23 +8,24 @@ use Respect\Validation\Validator as v;
 
 class AuthController extends Controller
 {
-    public function getSignOut($request, $response)
+    public function getSignIn($request, $response)
+    {
+        return $this->view->render($response, 'auth/signin.twig');
+    }
+
+        public function getSignOut($request, $response)
     {
         $this->auth->logout();
 
         return $response->withRedirect($this->router->pathFor('home'));
     }
 
-    public function getSignIn($request, $response)
-    {
-        return $this->view->render($response, 'auth/signin.twig');
-    }
-
     public function postSignIn($request, $response)
     {
+
         $auth = $this->auth->attempt(
-            $request->getParam('email'),
-            $request->getParam('password')
+            $request->getParam('user_email'),
+            $request->getParam('user_password')
         );
 
         if (!$auth) {
@@ -32,7 +33,8 @@ class AuthController extends Controller
             return $response->withRedirect($this->router->pathFor('auth.signin'));
         }
 
-        return $response->withRedirect($this->router->pathFor('home'));
+        // If Auth successfull, then redirect to choosen location
+        return $response->withRedirect($this->router->pathFor('dashboard'));
     }
 
     public function getSignUp($request, $response)
@@ -42,26 +44,42 @@ class AuthController extends Controller
 
     public function postSignUp($request, $response)
     {
+        /**
+        * Check if the fields are valied
+        */
         $validation = $this->validator->validate($request, [
-            'email' => v::noWhitespace()->notEmpty()->email()->emailAvailable(),
-            'name' => v::notEmpty()->alpha(),
-            'password' => v::noWhitespace()->notEmpty(),
+            'user_email' => v::noWhitespace()->notEmpty()->email()->emailAvailable(),
+            'user_name' => v::notEmpty()->alpha(),
+            'user_password' => v::noWhitespace()->notEmpty(),
         ]);
 
+        /**
+        * If the fields fail, then redirect back to signup
+        */
         if ($validation->failed()) {
             return $response->withRedirect($this->router->pathFor('auth.signup'));
         }
 
+        /**
+        * If validation is OK, then continue with registration.
+        */
         $user = User::create([
-            'email' => $request->getParam('email'),
-            'name' => $request->getParam('name'),
-            'password' => password_hash($request->getParam('password'), PASSWORD_DEFAULT),
+            'user_email' => $request->getParam('user_email'),
+            'user_name' => $request->getParam('user_name'),
+            'user_password_hash' => password_hash($request->getParam('user_password'), PASSWORD_DEFAULT),
         ]);
 
+        /** Add a flas message that everything went ok **/
         $this->flash->addMessage('info', 'You have been signed up!');
 
-        $this->auth->attempt($user->email, $request->getParam('password'));
+        $this->auth->attempt($user->user_email, $request->getParam('user_password'));
 
+        /** On success registration, redirect to dashboard */
         return $response->withRedirect($this->router->pathFor('home'));
+    }
+
+    public function dashboard($request, $response){
+        return $this->view->render($response, 'auth/dashboard/dashboard.twig');
+        // return $response->withRedirect($this->router->pathFor('dashboard'));
     }
 }
