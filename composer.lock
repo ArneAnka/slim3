@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "887dae896cdb50ce80ab38e3b9fed98b",
-    "content-hash": "9805ec09afaf7058ba2afa59a0545d11",
+    "hash": "08adbf3140a5d9cf8188c52848c8e614",
+    "content-hash": "648912d685783b965bb626a90d87eff4",
     "packages": [
         {
             "name": "container-interop/container-interop",
@@ -100,6 +100,46 @@
                 "string"
             ],
             "time": "2015-11-06 14:35:42"
+        },
+        {
+            "name": "fpdo/fluentpdo",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/fpdo/fluentpdo.git",
+                "reference": "db16192f7a70f28193930bdbc6f05880220fe670"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/fpdo/fluentpdo/zipball/db16192f7a70f28193930bdbc6f05880220fe670",
+                "reference": "db16192f7a70f28193930bdbc6f05880220fe670",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "FluentPDO/FluentPDO.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0",
+                "GPL-2.0+"
+            ],
+            "authors": [
+                {
+                    "name": "Marek Lichtner",
+                    "homepage": "http://licht.sk/"
+                }
+            ],
+            "description": "FluentPDO is small PHP library for rapid query building. Killer feature is smart join builder which generates joins automatically.",
+            "homepage": "https://github.com/fpdo/fluentpdo",
+            "keywords": [
+                "database",
+                "dbal",
+                "pdo"
+            ],
+            "time": "2016-03-30 20:33:43"
         },
         {
             "name": "illuminate/container",
@@ -1002,7 +1042,9 @@
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "fpdo/fluentpdo": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],

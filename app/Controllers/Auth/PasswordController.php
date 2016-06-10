@@ -13,6 +13,14 @@ class PasswordController extends Controller
         return $this->view->render($response, 'auth/password/change.twig');
     }
 
+    /**
+    * Change the password for the user.
+    *
+    * @param string $user_password_old (the current password)
+    * @param string $user_password (the new password of choice)
+    *
+    * @return bool
+    */
     public function postChangePassword($request, $response)
     {
         $validation = $this->validator->validate($request, [

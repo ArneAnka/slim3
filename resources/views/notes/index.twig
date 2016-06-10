@@ -1,0 +1,34 @@
+{% extends 'templates/app.twig' %}
+{% block title %}View all notes{% endblock %}
+
+{% block content %}
+		<div class="row">
+			<div class="col-md-6">
+
+	<form method="POST" action="{{ path_for('new.note') }}">
+            	<div class="form-group{{ errors.note_text ? ' has-error' : '' }}">
+                    <label for="note_text">Enter your note text</label>
+                    <input type="text" name="note_text" id="note_text" class="form-control" value="{{ note.note_text }}">
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-default">Edit note</button>
+                    {% if errors.note_text %}
+                        <span class="help-block">{{ errors.note_text | first }}</span>
+                    {% endif %}
+				</div>
+            	{{ csrf.field | raw }}
+	</form>
+
+{% if notes %}
+	<ul>
+	{% for note in notes %}
+			<li>{{ note.note_text }} <a href="{{ path_for('edit.note', {note_id: note.note_id}) }}"><i class="fa fa-pencil"></i></a> <a href="{{ base_url() }}/notes/deleteNote/{{ note.note_id }}"><i class="fa fa-trash"></i></a></li>
+	{% endfor %}
+	</ul>
+{% else %}
+	There is no notes :/ Create some!! =)
+{% endif %}
+
+</div>
+</div>
+{% endblock %}

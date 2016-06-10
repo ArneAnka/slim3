@@ -3,11 +3,17 @@ use Respect\Validation\Validator as v;
 
 $container = $app->getContainer();
 
+/**
+* Eloquent
+*/
 $capsule = new \Illuminate\Database\Capsule\Manager;
 $capsule->addConnection($container['settings']['db']);
 $capsule->setAsGlobal();
 $capsule->bootEloquent();
-    
+
+/**
+* Attach Eloquent to $container
+*/
 $container['db'] = function ($container) use ($capsule) {
     return $capsule;
 };
@@ -23,7 +29,7 @@ $container['flash'] = function ($container) {
 $container['view'] = function ($container) {
     $view = new \Slim\Views\Twig($container['settings']['view']['template_path'], $container['settings']['view']['twig']);
 
-    // Add extensions
+    // Extensions to view
     $view->addExtension(new \Slim\Views\TwigExtension(
         $container->router,
         $container->request->getUri()
@@ -41,10 +47,10 @@ $container['view'] = function ($container) {
     return $view;
 };
 
-// -----------------------------------------------------------------------------
-// Custom 404
-// -----------------------------------------------------------------------------
-//Override the default Not Found Handler
+/**
+* Custom 404
+* Override the default Not Found Handler
+*/
 // $container['notFoundHandler'] = function ($c) {
 //     return function ($request, $response) use ($c) {
 //         $c['view']->render($response, 'errors/404.twig');
@@ -52,10 +58,26 @@ $container['view'] = function ($container) {
 //     };
 // };
 
+/**
+* Custom CSRF fail response
+* Throw a "Method not allowed" error message if CSRF check fails.
+*/
+$container['csrf'] = function ($container) {
+    $guard = new \Slim\Csrf\Guard();
+    $guard->setFailureCallable(function ($request, $response, $next) {
+        $request = $request->withAttribute("csrf_status", false);
+        return $next($request, $response);
+    });
+    return $guard;
+};
+
 $container['validator'] = function ($container) {
     return new \App\Validation\Validator;
 };
 
+/**
+* Attach controllers to $container
+*/
 $container['HomeController'] = function ($container) {
     return new \App\Controllers\HomeController($container);
 };
@@ -68,21 +90,11 @@ $container['PasswordController'] = function ($container) {
     return new \App\Controllers\Auth\PasswordController($container);
 };
 
-// $container['csrf'] = function ($container) {
-//     return new \Slim\Csrf\Guard;
-// };
-
-/**
-* Throw a "Method not allowed" error message if CSRF check fails.
-* This can be custom. HAve a look on how to make a custom 404 page, in dependencies.php
-*/
-$container['csrf'] = function ($container) {
-    $guard = new \Slim\Csrf\Guard();
-    $guard->setFailureCallable(function ($request, $response, $next) {
-        $request = $request->withAttribute("csrf_status", false);
-        return $next($request, $response);
-    });
-    return $guard;
+$container['NoteController'] = function ($container) {
+    return new \App\Controllers\NoteController($container);
 };
+
+
+
 
 v::with('App\\Validation\\Rules\\');

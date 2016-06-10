@@ -3,13 +3,13 @@
 
 {% block content %}
   <div class="jumbotron">
-  <h1>Hello, world!</h1>
-  <p>This is a example of a TwigExtension: {{ diffForHumans("2016-06-01 16:07:46") }}</p>
-  <p>Under "App/TwigExtension" you can have a look at the "diffForHumans" extension.</p>
-  <p>And that function in then to be found in "App/helper.php". Don´t forget to add the extension in "bootstrap/dependencies.php". Like so: "$view->addExtension (new App\TwigExtension\diffForHumans());"</p>
-  <hr>
-  <p>But it you just are looking for something to configure, this is the structure:</p>
-  <pre>
+	  <h1>Hello, world!</h1>
+	  <p>This is a example of a TwigExtension: {{ diffForHumans("2016-06-01 16:07:46") }}</p>
+	  <p>Under "App/TwigExtension" you can have a look at the "diffForHumans" extension.</p>
+	  <p>And that function in then to be found in "App/helper.php".Don´t forget to add the extension in "bootstrap/dependencies.php". Like so: "$view->addExtension (new App\TwigExtension\diffForHumans());"</p>
+	  <hr>
+	  <p>But it you just are looking for something to configure, this is the structure:</p>
+<pre>
 ├── README.md
 ├── _installation <b>* Contains SQL file</b>
 ├── app
@@ -77,6 +77,7 @@
 		<li><s>File structure</s></li>
 		<li><s>Separate settings file</s></li>
 		<li>FluentPDO insted of Eloquent(?)</li>
+		<li>dotenv configuration</li>
 		<li>Remember me</li>
 		<li>failed-login-throttling and failed-password-change-throttling</li>
 		<li>user profile {{ base_url() }}/@{username}</li>
@@ -96,11 +97,13 @@
 			</ul>
 		</li>
 	</ul>
-<div class="progress">
-  <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
-    <span class="sr-only">40% Complete (success)</span>
-  </div>
-</div>
+
+	<div class="progress">
+	  <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
+	    <span class="sr-only">40% Complete (success)</span>
+	  </div>
+	</div>
+
 </div>
 
 {% endblock %}

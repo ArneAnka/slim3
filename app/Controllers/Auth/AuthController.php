@@ -20,6 +20,14 @@ class AuthController extends Controller
         return $response->withRedirect($this->router->pathFor('home'));
     }
 
+    /**
+    * Sign the user in with the provided credentials.
+    *
+    * @param string $user_email
+    * @param string $user_password
+    *
+    * @return bool
+    */
     public function postSignIn($request, $response)
     {
 
@@ -42,6 +50,15 @@ class AuthController extends Controller
         return $this->view->render($response, 'auth/signup.twig');
     }
 
+    /**
+    * Register a new user
+    *
+    * @param string $user_name
+    * @param string $user_email
+    * @param string $user_password
+    *
+    * @return bool
+    */
     public function postSignUp($request, $response)
     {
         /**

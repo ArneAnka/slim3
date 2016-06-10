@@ -20,4 +20,10 @@ $app->group('', function () {
     $this->post('/auth/password/change', 'PasswordController:postChangePassword');
 
     $this->get('/dashboard', 'AuthController:dashboard')->setName('dashboard');
+
+    $this->get('/notes', 'NoteController:index')->setName('notes');
+    $this->get('/notes/{note_id:[0-9]+}', 'NoteController:getEditNote');
+    $this->post('/notes/{note_id:[0-9]+}', 'NoteController:postEditNote')->setName('edit.note');
+    $this->get('/notes/deleteNote/{note_id:[0-9]+}', 'NoteController:deleteNote')->setName('delete.note');
+    $this->post('/notes', 'NoteController:newNote')->setName('new.note');
 })->add(new AuthMiddleware($container));
