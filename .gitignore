@@ -2,3 +2,4 @@ vendor/*
 log/*
 cache/*
 .DS_Store
+resources/database.sqlite

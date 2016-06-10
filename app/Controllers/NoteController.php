@@ -43,6 +43,7 @@ class NoteController extends Controller
         }else{
             // If another user tries to view a note that he/she dosent own.
             $this->flash->addMessage('error', 'No such note');
+            
             return $response->withRedirect($this->router->pathFor('notes'));
         }
     }
@@ -56,10 +57,10 @@ class NoteController extends Controller
 	*/
     public function postEditNote($request, $response, $args)
     {
+        // Check to se that the note does belong to the correct user
     	if($_SESSION['user_id'] == Note::where('user_id', '=', $_SESSION['user_id'])->where('note_id', '=', $args['note_id'])->first())
         {
-        	// $note = Note::whereId($args['note_id'])->first(['user_id']);
-            // $note = Note::where('user_id', '=', $_SESSION['user_id'], 'AND', 'note_id', '=', $args['note_id']);
+
             $note = Note::where('user_id', '=', $_SESSION['user_id'])->where('note_id', '=', $args['note_id'])->first();
             $note->note_text = $request->getParam('note_text');
             $note->save();
@@ -103,6 +104,25 @@ class NoteController extends Controller
     * @return bool
     */
     public function newNote($request, $response){
+
+        /**
+        * Check if the fields are valied
+        */
+        $validation = $this->validator->validate($request, [
+            'note_text' => v::notEmpty()
+                    ]);
+
+        /**
+        * If the fields fail, then redirect back to signup
+        */
+        if ($validation->failed()) 
+        {
+            $this->flash->addMessage('error', 'Please insert some text.');
+
+            return $response->withRedirect($this->router->pathFor('notes'));
+        }
+
+        
         // Insert new note into DB
         $note = new Note;
 

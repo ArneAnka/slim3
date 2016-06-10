@@ -4,19 +4,17 @@
 {% block content %}
     <div class="row">
         <div class="col-md-6">
-	<p>This is the area where all notes should be!</p>
-
 {% if note %}
             <form action="{{ path_for('edit.note', {note_id: note.note_id}) }}" method="post">
             	<div class="form-group{{ errors.note_text ? ' has-error' : '' }}">
                     <label for="note">Edit note</label>
                     <input type="text" name="note_text" id="note_text" class="form-control" value="{{ note.note_text }}">
-                </div>
-                <div class="form-group">
-                    <button type="submit" class="btn btn-default">Edit note</button>
                     {% if errors.note_text %}
                         <span class="help-block">{{ errors.note_text | first }}</span>
                     {% endif %}
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-default">Edit note</button>
                  </div>
             	{{ csrf.field | raw }}
 			</form>
