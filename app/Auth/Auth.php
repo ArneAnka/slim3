@@ -20,6 +20,15 @@ class Auth
         return isset($_SESSION['user_id']);
     }
 
+    public function checkIsAdmin()
+    {
+        if(User::where('user_id', $_SESSION['user_id'])->first()->user_account_type == '1'){
+           return true;
+       }else{
+        return false;
+       }
+    }
+
     public function attempt($email, $password)
     {
         $user = User::where('user_email', $email)->first();

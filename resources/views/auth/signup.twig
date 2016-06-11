@@ -8,6 +8,7 @@
                 <div class="panel-heading">Sign up</div>
                 <div class="panel-body">
                     <form action="{{ path_for('auth.signup') }}" method="post" autocomplete="off">
+                        <input type="hidden" name="op" id="op" value="reg">
                         <div class="form-group{{ errors.user_email ? ' has-error' : '' }}">
                             <label for="user_email">Email</label>
                             <input type="email" name="user_email" id="user_email" placeholder="you@domain.com" class="form-control" value="{{ old.user_email }}">

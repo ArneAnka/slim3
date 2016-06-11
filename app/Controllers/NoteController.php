@@ -36,7 +36,7 @@ class NoteController extends Controller
     public function getEditNote($request, $response, $args)
     {
         $current_user_id = $_SESSION['user_id'];
-        $user_id_of_note = Note::where('note_id', $args['note_id'])->first()->user_id;;
+        $user_id_of_note = Note::where('note_id', $args['note_id'])->first()->user_id;
 
         if($current_user_id == $user_id_of_note){
             return $this->view->render($response, 'notes/edit.twig', ['note' => Note::find($args['note_id'])]);
@@ -58,7 +58,7 @@ class NoteController extends Controller
     public function postEditNote($request, $response, $args)
     {
         // Check to se that the note does belong to the correct user
-    	if($_SESSION['user_id'] == Note::where('user_id', '=', $_SESSION['user_id'])->where('note_id', '=', $args['note_id'])->first())
+    	if($_SESSION['user_id'] == Note::where('note_id', $args['note_id'])->first()->user_id)
         {
 
             $note = Note::where('user_id', '=', $_SESSION['user_id'])->where('note_id', '=', $args['note_id'])->first();

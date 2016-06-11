@@ -1,7 +1,11 @@
 <?php
 
+/**
+* Add your "extra" middleware
+*/
 use App\Middleware\AuthMiddleware;
 use App\Middleware\GuestMiddleware;
+use App\Middleware\AdminMiddleware;
 
 $app->get('/', 'HomeController:index')->setName('home');
 
@@ -27,3 +31,7 @@ $app->group('', function () {
     $this->get('/notes/deleteNote/{note_id:[0-9]+}', 'NoteController:deleteNote')->setName('delete.note');
     $this->post('/notes', 'NoteController:newNote')->setName('new.note');
 })->add(new AuthMiddleware($container));
+
+$app->get('/admin', function ($request,  $response, $args) {
+    return 'You are signed in as admin';
+})->add(new AdminMiddleware($container));
