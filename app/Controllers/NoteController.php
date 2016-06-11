@@ -65,7 +65,7 @@ class NoteController extends Controller
             $note->note_text = $request->getParam('note_text');
             $note->save();
 
-            $this->flash->addMessage('info', 'Note was successfully updated!');
+            $this->flash->addMessage('success', 'Note was successfully updated!');
 
             return $response->withRedirect($this->router->pathFor('notes'));
     	}else{ 
@@ -87,11 +87,18 @@ class NoteController extends Controller
 	*/
     public function deleteNote($request, $response, $args)
     {
-    	$note = Note::where('note_id', '=', $args['note_id'])->first();
+        // Check to se that the note does belong to the correct user
+        if($_SESSION['user_id'] == Note::where('note_id', $args['note_id'])->first()->user_id)
+        {
+            $note = Note::where('user_id', '=', $_SESSION['user_id'])->where('note_id', '=', $args['note_id'])->first();
+            $note->delete();
 
-        $note->delete();
+            $this->flash->addMessage('info', 'Note was deleted');
 
-        $this->flash->addMessage('info', 'Note was deleted');
+            return $response->withRedirect($this->router->pathFor('notes'));
+        }
+
+        $this->flash->addMessage('error', 'No such note');
 
         return $response->withRedirect($this->router->pathFor('notes'));
     }
@@ -117,7 +124,7 @@ class NoteController extends Controller
         */
         if ($validation->failed()) 
         {
-            $this->flash->addMessage('error', 'Please insert some text.');
+            $this->flash->addMessage('warning', 'Please insert some text.');
 
             return $response->withRedirect($this->router->pathFor('notes'));
         }
@@ -131,7 +138,7 @@ class NoteController extends Controller
 
         $note->save();
 
-        $this->flash->addMessage('info', 'Your note has been saved');
+        $this->flash->addMessage('success', 'Your note has been saved!');
 
         return $response->withRedirect($this->router->pathFor('notes'));
 

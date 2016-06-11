@@ -1,15 +1,27 @@
 {% if flash.getMessages %}
 
+	{% if flash.getMessage('success') %}
+		<div class="alert alert-success" role="alert">
+			{{ flash.getMessage('success') | first }}
+		</div>
+	{% endif %}
+
 	{% if flash.getMessage('info') %}
-	    <div class="alert alert-info">
-	        {{ flash.getMessage('info') | first }}
-	    </div>
+		<div class="alert alert-info" role="alert">
+				{{ flash.getMessage('info') | first }}
+		</div>
+	{% endif %}
+
+	{% if flash.getMessage('warning') %}
+		<div class="alert alert-warning" role="alert">
+				{{ flash.getMessage('warning') | first }}
+		</div>
 	{% endif %}
 
 	{% if flash.getMessage('error') %}
-	    <div class="alert alert-danger">
-	        {{ flash.getMessage('error') | first }}
-	    </div>
+		<div class="alert alert-danger" role="alert">
+			{{ flash.getMessage('error') | first }}
+		</div>
 	{% endif %}
 
 {% endif %}
