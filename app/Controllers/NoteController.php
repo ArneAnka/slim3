@@ -19,9 +19,8 @@ class NoteController extends Controller
     public function index($request, $response)
     {
     	// fetch all notes from model note, pass to view
-    	// $notes = ['This is a test', 'This is a second test', 'Keep testing mate'];
 
-        $notes = Note::where('user_id',$_SESSION['user_id'])->get();
+        $notes = Note::where('user_id',$_SESSION['user_id'])->orderBy('note_id','desc')->get();
 
         return $this->view->render($response, 'notes/index.twig', ['notes' => $notes]);
     }
@@ -41,7 +40,7 @@ class NoteController extends Controller
         if($current_user_id == $user_id_of_note){
             return $this->view->render($response, 'notes/edit.twig', ['note' => Note::find($args['note_id'])]);
         }else{
-            // If another user tries to view a note that he/she dosent own.
+            // If another user tries to view a note that he/she dosent own, or that note doesent exist.
             $this->flash->addMessage('error', 'No such note');
             
             return $response->withRedirect($this->router->pathFor('notes'));
@@ -120,7 +119,7 @@ class NoteController extends Controller
                     ]);
 
         /**
-        * If the fields fail, then redirect back to signup
+        * If the fields fail, then redirect back to notes
         */
         if ($validation->failed()) 
         {
@@ -128,12 +127,12 @@ class NoteController extends Controller
 
             return $response->withRedirect($this->router->pathFor('notes'));
         }
-
         
         // Insert new note into DB
         $note = new Note;
 
         $note->note_text = $request->getParam('note_text');
+
         $note->user_id = $_SESSION['user_id'];
 
         $note->save();

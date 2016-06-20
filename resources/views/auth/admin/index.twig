@@ -1,0 +1,59 @@
+{% extends 'templates/app.twig' %}
+{% block title %}Admin interface{% endblock %}
+
+{% block content %}
+<div class="jumbotron">
+	<h2>This is the admin interface, only visibel for admins.</h2>
+</div>
+	{% if users is not empty %}
+<table class="table table-striped">
+        <thead>
+            <tr>
+                <th>
+                    #
+                </th>
+                <th>
+                    Username
+                </th>
+                <th>
+                    Users email
+                </th>
+                <th>
+                	Users profile
+                </th>
+                <th>
+                	Joined
+                </th>
+                <th>
+                	Ban time in days
+                </th>
+                <th>
+                	Soft delete
+                </th>
+                <th>
+                	Submit
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+		{% for user in users %}
+		<tr>
+			<th scope="row">{{ user.user_id }}</th>
+			<td>{{ user.user_name }}</td>
+			<td>{{ user.user_email }}</td>
+			<td><a href="{{ base_url()}}/@{{ user.user_name }}">{{ user.user_name }}</a></td>
+			<td>{{ diffForHumans(user.created_at) }}</td>
+			<form action="{{ base_url() }}/admin" method="POST">
+			    <td><input type="number" name="suspension" class="form-control" /></td>
+			    <td><input type="checkbox" name="softDelete" {% if user.user_deleted == 'on' %}checked{% endif %}/></td>
+			    <td><input type="hidden" name="user_id" value="{{ user.user_id }}" />
+			    	<button type="submit" class="btn btn-default"><i class="fa fa-exclamation"></i> Submit</button></td>
+			</form>
+		</tr>
+		{% endfor %}
+	</tbody>
+	</table>
+	{% endif %}
+
+	{{ test }}
+{% endblock %}

@@ -66,6 +66,9 @@ class AuthController extends Controller
         return $response->withRedirect($this->router->pathFor('dashboard'));
     }
 
+    /**
+    * Render sign-up page
+    */
     public function getSignUp($request, $response)
     {
         return $this->view->render($response, 'signup.twig');
@@ -88,7 +91,7 @@ class AuthController extends Controller
         */
         $validation = $this->validator->validate($request, [
             'user_email' => v::noWhitespace()->notEmpty()->email()->emailAvailable(),
-            'user_name' => v::notEmpty()->alpha(),
+            'user_name' => v::noWhitespace()->notEmpty()->alpha(),
             'user_password' => v::noWhitespace()->notEmpty(),
             'op' => v::equals('reg'),
         ]);
@@ -109,13 +112,14 @@ class AuthController extends Controller
             'user_password_hash' => password_hash($request->getParam('user_password'), PASSWORD_DEFAULT),
         ]);
 
-        /** Add a flas message that everything went ok **/
-        $this->flash->addMessage('success', 'You have been signed up!');
+        if($this->auth->attempt($user->user_email, $request->getParam('user_password'))){
+            /** Add a flas message that everything went ok **/
+            $this->flash->addMessage('success', 'You have been signed up!');
 
-        $this->auth->attempt($user->user_email, $request->getParam('user_password'));
-
-        /** On success registration, redirect to dashboard */
-        return $response->withRedirect($this->router->pathFor('home'));
+            /** On success registration, redirect to dashboard */
+            return $response->withRedirect($this->router->pathFor('home'));
+        }
+        return false;
     }
 
     /**

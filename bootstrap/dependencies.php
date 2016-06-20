@@ -35,7 +35,7 @@ $container['view'] = function ($container) {
         $container->request->getUri()
     ));
     $view->addExtension(new Twig_Extension_Debug());
-    $view->addExtension (new App\TwigExtension\diffForHumans());
+    $view->addExtension(new App\TwigExtension\diffForHumans());
 
     $view->getEnvironment()->addGlobal('auth', [
         'check' => $container->auth->check(),
@@ -94,7 +94,12 @@ $container['NoteController'] = function ($container) {
     return new \App\Controllers\NoteController($container);
 };
 
+$container['ProfileController'] = function ($container) {
+    return new \App\Controllers\ProfileController($container);
+};
 
-
+$container['AdminController'] = function ($container) {
+    return new \App\Controllers\AdminController($container);
+};
 
 v::with('App\\Validation\\Rules\\');

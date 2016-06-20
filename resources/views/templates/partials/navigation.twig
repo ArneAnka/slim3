@@ -24,6 +24,9 @@
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ auth.user.user_name }} <span class="caret"></span></a>
                         <ul class="dropdown-menu">
+                        {% if auth.user.user_account_type == 1 %}
+                            <li><a href="{{ path_for('admin.index') }}"><i class="fa fa-first-order"></i> Admin</a></li>
+                        {% endif %}
                             <li><a href="{{ path_for('auth.password.change') }}"><i class="fa fa-cog"></i> Change password</a></li>
                             <li role="separator" class="divider"></li>
                             <li><a href="{{ path_for('auth.signout') }}"><i class="fa fa-sign-out"></i> Sign out</a></li>
