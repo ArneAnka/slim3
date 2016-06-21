@@ -3,6 +3,7 @@ CREATE TABLE IF NOT EXISTS `notes` (
  `note_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
  `note_text` text NOT NULL,
  `user_id` int(11) unsigned NOT NULL,
+ `note_deleted` tinyint(1) unsigned DEFAULT NULL,
  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
  PRIMARY KEY (`note_id`)

@@ -41,7 +41,7 @@
 			<th scope="row">{{ user.user_id }}</th>
 			<td>{{ user.user_name }}</td>
 			<td>{{ user.user_email }}</td>
-			<td><a href="{{ base_url()}}/@{{ user.user_name }}">{{ user.user_name }}</a></td>
+			<td><a href="{{ base_url()}}/@{{ user.user_name }}">@{{ user.user_name }}</a></td>
 			<td>{{ diffForHumans(user.created_at) }}</td>
 			<form action="{{ base_url() }}/admin" method="POST">
 			    <td><input type="number" name="suspension" class="form-control" /></td>

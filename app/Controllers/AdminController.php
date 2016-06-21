@@ -15,10 +15,22 @@ class AdminController extends Controller
 	    return $this->view->render($response, 'auth/admin/index.twig', ['users' => $users]);
     }
 
+    /**
+    * If Admin submits form on admin page, both softdelete and suspension field will be
+    * submitted.
+    * @param suspension
+    * @param softDlete
+    * @param user_id
+    *
+    * @return bool
+    */
+
     public function postIndex($request, $response){
 
     	/**
-        * Check if the fields are valied. op is a hidden field. To prevent bots
+        * Check if the fields are valied.
+        * suspension can be both negative and positive. To set, or to remove ban time.
+        * softDelete is yes/no.
         */
         $validation = $this->validator->validate($request, [
             'suspension' => v::optional(v::intVal()), //->positive()
@@ -34,6 +46,9 @@ class AdminController extends Controller
             return $response->withRedirect($this->router->pathFor('admin.index'));
         }
 
+        /**
+        * Check if the suspension/ban should be removed.
+        */
 		if ($request->getParam('suspension') > 0) {
 			$date = new \DateTime();
 			$date->format('Y-m-d H:i:s');
@@ -43,12 +58,18 @@ class AdminController extends Controller
 			$suspensionTime = null;
 		}
 
+		/**
+		* Fetch, and insert the values on that specefic user
+		*/
 		$user = User::where('user_id', '=', $request->getParam('user_id'))->first();
     	$user->user_suspension_timestamp = $suspensionTime;
     	$user->user_deleted = $request->getParam('softDelete');
-    	session_destroy();
-
     	$user->save();
+
+    	/**
+    	* Sign-out the user.
+    	*/
+    	session_destroy();
 
     	// return $this->view->render($response, 'auth/admin/index.twig', ['grejer' => $grejer]);
     	return $response->withRedirect($this->router->pathFor('admin.index'));

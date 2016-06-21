@@ -7,6 +7,7 @@
 	<h2>This is the Dashboard, only visibel for signed-in user.</h2>
 	<h3>You are signed in as: {{ auth.user.user_name }}</h3>
 	<p>Try to sign-out, then visit {{ base_url() }}/dashboard</p>
+	<p>Or visit your profile at <a href="{{ base_url() }}/@{{ auth.user.user_name }}">@{{auth.user.user_name}}</a>
 </div>
 
 {% endblock %}
