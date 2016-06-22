@@ -31,7 +31,6 @@ class AdminController extends Controller
         * suspension can be both negative and positive. To set, or to remove ban time.
         * softDelete is yes/no.
         *
-        * TODO: sign out effected user.
         */
         $validation = $this->validator->validate($request, [
             'suspension' => v::optional(v::intVal()), //->positive()
@@ -63,10 +62,18 @@ class AdminController extends Controller
 		* Fetch, and insert the values on that specefic user
 		*/
 		$user = User::where('user_id', '=', $request->getParam('user_id'))->first();
+
+        /* Deny to alter other admin accounts */
+        if($user->user_account_type == 1){
+            $this->flash->addMessage('error', 'You cannot ban or suspend other admins.');
+            return $response->withRedirect($this->router->pathFor('admin.index'));
+        }
+
     	$user->user_suspension_timestamp = $suspensionTime;
     	$user->user_deleted = $request->getParam('softDelete');
     	$user->save();
 
+        $this->flash->addMessage('success', 'User status has been set.');
     	return $response->withRedirect($this->router->pathFor('admin.index'));
     }
 }

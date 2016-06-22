@@ -24,3 +24,12 @@ CREATE TABLE IF NOT EXISTS `users` (
  UNIQUE KEY `user_name` (`user_name`),
  UNIQUE KEY `user_email` (`user_email`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='user data';
+
+INSERT INTO users (user_name, user_password_hash, user_email, user_account_type) 
+VALUES('demo', '$2y$10$w92ibsqyGjlGBL8vQipbJeS9BCUcbC8j0vxIgfC5ShxAdcsXC/s3W', 'john@example.com', '1');
+
+INSERT INTO users (user_name, user_password_hash, user_email) 
+VALUES('demo2', '$2y$10$w92ibsqyGjlGBL8vQipbJeS9BCUcbC8j0vxIgfC5ShxAdcsXC/s3W', 'demo@example.com');
+
+INSERT INTO users (user_name, user_password_hash, user_email, user_deleted) 
+VALUES('mrSpam', '$2y$10$w92ibsqyGjlGBL8vQipbJeS9BCUcbC8j0vxIgfC5ShxAdcsXC/s3W', 'spam.alot@example.com', '1');

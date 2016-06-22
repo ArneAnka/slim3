@@ -7,13 +7,19 @@ use App\Middleware\AuthMiddleware;
 use App\Middleware\GuestMiddleware;
 use App\Middleware\AdminMiddleware;
 
-$app->get('/', 'HomeController:index')->setName('home');
-
-// // Render a view immediately with and arg
+// // Render a view immediately from routes.php with and arguments
 // $app->get('/@{username}', function ($request, $response, $args) {
 //     return $this->view->render($response, 'profiles/index.twig', ['username' => $args['username']]);
 //     // return 'Hello ' . $args['user'] .', nice to meet you!';
 // });
+
+/* json example */
+$app->get('/json', function ($request, $response){
+    $data = array('user_name' => 'John Doe','email' => 'john.doe@example.com');
+    return $response->withJson($data);
+});
+
+$app->get('/', 'HomeController:index')->setName('home');
 
 $app->get('/@{user_name}', 'ProfileController:getIndex'); //alpha & numeric
 

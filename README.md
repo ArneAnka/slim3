@@ -12,11 +12,12 @@ Users can sign-up and sign-in.
 
 ### Run it:
 
-1. `$ cd slim3` (the root of the git clone)
-2. `$ php -S 0.0.0.0:8888 -t public public/index.php`
-3. Browse to http://localhost:8888
-4. Login as John Doe, email: demo@demo.com and password 123
-5. Or as John Smith, email: demo2@demo.com and password 123
+1. Open terminal, `$ cd slim3` (the root of the git clone)
+2. Type `$ php -S 0.0.0.0:8888 -t public public/index.php`
+3. Create the database file, `$ touch resources/database.sqlite`
+4. Open folder `_installation` and follow the steps.
+5. Browse to http://localhost:8888
+6. Sign in with `john@example.com` and password `123`
 
 ## Key directories
 
@@ -38,5 +39,4 @@ Users can sign-up and sign-in.
 * `resources/views/home.twig`: Twig template file for the home page
 
 ## TODO
-* Ditch Eloquent for use of FluentPDO?
-* Simple CRUD
+* So many things to do. Much todo
