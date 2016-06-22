@@ -26,11 +26,12 @@ class AdminController extends Controller
     */
 
     public function postIndex($request, $response){
-
     	/**
         * Check if the fields are valied.
         * suspension can be both negative and positive. To set, or to remove ban time.
         * softDelete is yes/no.
+        *
+        * TODO: sign out effected user.
         */
         $validation = $this->validator->validate($request, [
             'suspension' => v::optional(v::intVal()), //->positive()
@@ -66,12 +67,6 @@ class AdminController extends Controller
     	$user->user_deleted = $request->getParam('softDelete');
     	$user->save();
 
-    	/**
-    	* Sign-out the user.
-    	*/
-    	session_destroy();
-
-    	// return $this->view->render($response, 'auth/admin/index.twig', ['grejer' => $grejer]);
     	return $response->withRedirect($this->router->pathFor('admin.index'));
     }
 }

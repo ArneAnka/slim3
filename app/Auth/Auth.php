@@ -6,6 +6,11 @@ use App\Models\User;
 
 class Auth
 {
+    /**
+    * return user ID in.
+    *
+    * @return mixed
+    */
     public function user()
     {
         if(!empty($_SESSION['user_id']))
@@ -15,28 +20,59 @@ class Auth
         return false;
     }
 
+    /**
+    * Check if the user is signed in or not.
+    *
+    * @return bool
+    */
     public function check()
     {
         return isset($_SESSION['user_id']);
     }
 
+    /**
+    * Check if the user indeed is the admin
+    *
+    * @param $_SESSION['user_id']
+    *
+    * @return bool
+    */
     public function checkIsAdmin()
     {
-        if(User::where('user_id', $_SESSION['user_id'])->first()->user_account_type == 1){
+        /* Is the user signed in? */
+        if(!$this->check()){
+            return false;
+        }
+
+        /* If the user is signed in, then see if the user is admin */
+        $signed_in_user = User::where('user_id', $_SESSION['user_id'])->first()->user_account_type;
+
+        if($signed_in_user == '1'){
            return true;
        }else{
             return false;
        }
     }
 
+    /**
+    * Attampt to sign in the user.
+    *
+    * @param $email
+    * @param $password
+    *
+    * @return bool
+    */
     public function attempt($email, $password)
     {
+        /* Try and fetch user information DB */
         $user = User::where('user_email', $email)->first();
 
+        /* If no user data was found, return false */
         if (!$user) {
             return false;
         }
 
+        /* If user is marked as deleted, return false */
         if($user->user_deleted){
             return false;
         }
@@ -69,6 +105,10 @@ class Auth
         return false;
     }
 
+    /**
+    * sign out the user by simply unset the session user_id
+    * TODO: user should be signed-in with session in DB
+    */
     public function logout()
     {
         $user = User::where('user_email', $_SESSION['user_email'])->first();

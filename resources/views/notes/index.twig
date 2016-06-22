@@ -3,82 +3,80 @@
 
 {% block content %}
 
-            <div class="panel panel-default">
-                <div class="panel-heading">Enter your note text</div>
-                <div class="panel-body">
-                   <form method="POST" action="{{ path_for('new.note') }}" autocomplete="off">
-                        <div class="form-group{{ errors.note_text ? ' has-error' : '' }}">
-                            <label for="note_text">Enter your note text</label>
-                            <input type="text" name="note_text" id="note_text" class="form-control" value="{{ note.note_text }}">
-                            {% if errors.note_text %}
-                                <span class="help-block">{{ errors.note_text | first }}</span>
-                            {% endif %}
-                        </div>
-                        <div class="form-group">
-                            <button type="submit" class="btn btn-primary">save note</button>
-                        </div>
-                        {{ csrf.field | raw }}
-                   </form>
+    <div class="panel panel-default">
+        <div class="panel-heading">Enter your note text</div>
+        <div class="panel-body">
+           <form method="POST" action="{{ path_for('new.note') }}" autocomplete="off">
+                <div class="form-group{{ errors.note_text ? ' has-error' : '' }}">
+                    <label for="note_text">Enter your note text</label>
+                    <input type="text" name="note_text" id="note_text" class="form-control" value="{{ note.note_text }}">
+                    {% if errors.note_text %}
+                        <span class="help-block">{{ errors.note_text | first }}</span>
+                    {% endif %}
                 </div>
-            </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">save note</button>
+                </div>
+                {{ csrf.field | raw }}
+           </form>
+        </div>
+    </div>
 
-
-
-{% if notes is not empty %}
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>
-                    #
-                </th>
-                <th>
-                    Note text
-                </th>
-                <th>
-                    Updated at
-                </th>
-                <th>
-                    Created at
-                </th>
-                <th>
-                    Edit
-                </th>
-                <th>
-                    Delete
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for note in notes %}
-            <tr>
-                <th scope="row">
-                    {{ note.note_id }}
-                </th>
-                <td>
-                    {{ note.note_text }}
-                </td>
-                <td>
-                    {% if note.updated_at == note.created_at %}
-                        -
-                    {% else %}
-                    {{ diffForHumans(note.updated_at) }}
-                {% endif %}
-                </td>
-                <td>
-                    {{ diffForHumans(note.created_at) }}
-                </td>
-                <td>
-                    <a href="{{ path_for('edit.note', {note_id: note.note_id}) }}"><i class="fa fa-pencil"></i></a>
-                </td>
-                <td>
-                    <a href="{{ base_url() }}/notes/deleteNote/{{ note.note_id }}"><i class="fa fa-trash"></i></a>
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-{% else %}
-    There is no notes :/ Create some!! =)
-{% endif %}
+    {% if notes is not empty %}
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>
+                        #
+                    </th>
+                    <th>
+                        Note text
+                    </th>
+                    <th>
+                        Updated at
+                    </th>
+                    <th>
+                        Created at
+                    </th>
+                    <th>
+                        Edit
+                    </th>
+                    <th>
+                        Delete
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for note in notes %}
+                <tr>
+                    <th scope="row">
+                        {{ note.note_id }}
+                    </th>
+                    <td>
+                        {{ note.note_text }}
+                    </td>
+                    <td>
+                        {% if note.updated_at == note.created_at %}
+                            -
+                        {% else %}
+                        {{ diffForHumans(note.updated_at) }}
+                    {% endif %}
+                    </td>
+                    <td>
+                        {{ diffForHumans(note.created_at) }}
+                    </td>
+                    <td>
+                        <a href="{{ path_for('edit.note', {note_id: note.note_id}) }}"><i class="fa fa-pencil"></i></a>
+                    </td>
+                    <td>
+                        <a href="{{ base_url() }}/notes/deleteNote/{{ note.note_id }}"><i class="fa fa-trash"></i></a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        There is no notes :/ Create some!! =)
+    {% endif %}
 
 {% endblock %}

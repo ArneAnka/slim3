@@ -47,7 +47,7 @@
 			    <td><input type="number" name="suspension" class="form-control" /></td>
 			    <td><input type="checkbox" name="softDelete" {% if user.user_deleted == 'on' %}checked{% endif %}/></td>
 			    <td><input type="hidden" name="user_id" value="{{ user.user_id }}" />
-			    	<button type="submit" class="btn btn-default"><i class="fa fa-exclamation"></i> Submit</button></td>
+			    <button type="submit" class="btn btn-default"><i class="fa fa-exclamation"></i> Submit</button></td>
 			</form>
 		</tr>
 		{% endfor %}
