@@ -13,7 +13,7 @@ use App\Middleware\AdminMiddleware;
 //     // return 'Hello ' . $args['user'] .', nice to meet you!';
 // });
 
-/* json example */
+/* json example for API */
 $app->get('/json', function ($request, $response){
     $data = array('user_name' => 'John Doe','email' => 'john.doe@example.com');
     return $response->withJson($data);

@@ -8,6 +8,12 @@ use Respect\Validation\Validator as v;
 
 class AdminController extends Controller
 {
+    /**
+    * Fetch all user rows
+    *
+    * @return user_id, user_name, user_password_hash, user_email, updated_at, created_at, user_account_type_,
+    * user_profile, user_deleted, user_slug, user_suspension_time, session_id
+    */
     public function getIndex($request, $response)
     {
 	    $users = User::all();

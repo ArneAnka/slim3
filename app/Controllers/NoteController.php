@@ -14,7 +14,7 @@ class NoteController extends Controller
 	*
 	* @param null
 	*
-	* @return mixed
+	* @return note_id, note_text, user_id, created_at, updated_at
 	*/
     public function index($request, $response)
     {
@@ -40,7 +40,7 @@ class NoteController extends Controller
         if($current_user_id == $user_id_of_note){
             return $this->view->render($response, 'notes/edit.twig', ['note' => Note::find($args['note_id'])]);
         }else{
-            // If another user tries to view a note that he/she dosent own, or that note doesent exist.
+            // If another user tries to view a note that he/she doesn't own, or that note doesn't exist.
             $this->flash->addMessage('error', 'No such note');
             
             return $response->withRedirect($this->router->pathFor('notes'));
@@ -52,7 +52,7 @@ class NoteController extends Controller
 	*
 	* @param note_id
 	*
-	* @return mixed
+	* @return bool
 	*/
     public function postEditNote($request, $response, $args)
     {
