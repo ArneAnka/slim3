@@ -1,10 +1,10 @@
 {% extends 'templates/app.twig' %}
-{% block title %}{{username }}{% endblock %}
+{% block title %}{{ user.user_name }}{% endblock %}
 {% block content %}
     <div class="row">
         <div class="col-md-6">
 			¯\_(ツ)_/¯ <br>
-			{{ username }}
+			{{ user.user_name }}
         </div>
     </div>
 {% endblock %}
