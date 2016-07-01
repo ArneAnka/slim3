@@ -39,10 +39,10 @@
                         Created at
                     </th>
                     <th>
-                        Edit
+                        <!-- Edit -->
                     </th>
                     <th>
-                        Delete
+                        <!-- Delete -->
                     </th>
                 </tr>
             </thead>
@@ -66,10 +66,10 @@
                         {{ diffForHumans(note.created_at) }}
                     </td>
                     <td>
-                        <a href="{{ path_for('edit.note', {note_id: note.note_id}) }}"><i class="fa fa-pencil text-muted"></i></a>
+                        <a href="{{ path_for('edit.note', {note_id: note.note_id}) }}" class="btn btn-primary btn-xs" role="button">Edit</i></a>
                     </td>
                     <td>
-                        <a href="{{ base_url() }}/notes/deleteNote/{{ note.note_id }}"><i class="fa fa-trash text-muted"></i></a>
+                        <a href="{{ path_for('delete.note', {note_id: note.note_id }) }}" class="btn btn-primary btn-xs" role="button">Delete</i></a>
                     </td>
                 </tr>
             {% endfor %}

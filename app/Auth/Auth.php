@@ -7,7 +7,9 @@ use App\Models\User;
 class Auth
 {
     /**
-    * return user ID in.
+    * Return user ID.
+    *
+    * Fetch with $this->container->auth->check()
     *
     * @return mixed
     */
@@ -55,7 +57,7 @@ class Auth
     }
 
     /**
-    * Attampt to sign in the user.
+    * Attempt to sign in the user.
     *
     * @param $email
     * @param $password
@@ -69,23 +71,27 @@ class Auth
 
         /**
         * Password throttling
+        *
+        * brute force attack mitigation: use session failed login count and last failed login for not found users.
+        * block login attempt if somebody has already failed 3 times and the last login attempt is less than 30sec ago
+        * (limits user searches in database). Change 30 to the amount of seconds you want the user NOT to be
+        * able to try another login.
         */
-        // brute force attack mitigation: use session failed login count and last failed login for not found users.
-        // block login attempt if somebody has already failed 3 times and the last login attempt is less than 30sec ago
-        // (limits user searches in database)
-        if($_SESSION['failed-login-count'] >= 3 AND ($_SESSION['last-failed-login'] > (time() - 30))) {
+        if(isset($_SESSION['failed-login-count']) && isset($_SESSION['last-failed-login'])){
+            if($_SESSION['failed-login-count'] >= 3 AND ($_SESSION['last-failed-login'] > (time() - 30))) {
+            return false;
+            }
+        }
+
+        /* If no user data was found, return false */
+        if(!$user) {
+            // increment the user not found count, helps mitigate user enumeration
+            $this->incrementUserNotFoundCounter();
             return false;
         }
 
         // block login attempt if somebody has already failed 3 times and the last login attempt is less than 30sec ago
         if (($user->user_failed_logins >= 3) AND ($user->user_last_failed_login > (time() - 30))) {
-            return false;
-        }
-
-        /* If no user data was found, return false */
-        if (!$user) {
-            // increment the user not found count, helps mitigate user enumeration
-            $this->incrementUserNotFoundCounter();
             return false;
         }
 
@@ -129,10 +135,8 @@ class Auth
             $this->resetUserNotFoundCounter();
 
             return true;
-        }else if (!password_verify($password, $user->user_password_hash)) {
-            $this->incrementFailedLoginCounterOfUser($user->user_email);
-            return false;
         }
+        $this->incrementFailedLoginCounterOfUser($user->user_email);
         return false;
     }
 

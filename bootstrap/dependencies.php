@@ -62,13 +62,16 @@ $container['view'] = function ($container) {
 * Custom CSRF fail response
 * Throw a "Method not allowed" error message if CSRF check fails.
 */
+// $container['csrf'] = function ($container) {
+//     $guard = new \Slim\Csrf\Guard();
+//     $guard->setFailureCallable(function ($request, $response, $next) {
+//         $request = $request->withAttribute("csrf_status", false);
+//         return $next($request, $response);
+//     });
+//     return $guard;
+// };
 $container['csrf'] = function ($container) {
-    $guard = new \Slim\Csrf\Guard();
-    $guard->setFailureCallable(function ($request, $response, $next) {
-        $request = $request->withAttribute("csrf_status", false);
-        return $next($request, $response);
-    });
-    return $guard;
+    return new \Slim\Csrf\Guard;
 };
 
 $container['validator'] = function ($container) {

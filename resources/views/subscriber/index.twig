@@ -1,0 +1,28 @@
+{% extends 'templates/app.twig' %}
+{% block title %}Quiz time!{% endblock %}
+
+{% block content %}
+
+	{% if signed_in is sameas(false) %}
+		<div class="row">
+			<div class="col-md-6">
+				You are not signed in
+				{#
+				{% include 'partials/sign-in.twig' %}
+				#}
+			</div>
+		</div>
+	{% elseif subscription is sameas(false) %}
+		<div class="row">
+			<div class="col-md-6">
+				You have to subscribe to do this
+				{#
+				{% include 'partials/subscribe.twig' %}
+				#}
+			</div>
+		</div>
+	{% else %}
+ 		Here goes content for a valid subscriber.
+	{% endif %}
+
+{% endblock %}

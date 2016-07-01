@@ -6,6 +6,7 @@
 use App\Middleware\AuthMiddleware;
 use App\Middleware\GuestMiddleware;
 use App\Middleware\AdminMiddleware;
+use App\Middleware\SubscriberMiddleware;
 
 // // Render a view immediately from routes.php with and arguments
 // $app->get('/@{username}', function ($request, $response, $args) {
@@ -51,3 +52,8 @@ $app->group('', function () {
     $this->get('/admin', 'AdminController:getIndex')->setName('admin.index');
     $this->post('/admin', 'AdminController:postIndex')->setName('admin.post');
 })->add(new AdminMiddleware($container));
+
+/* Subscription */
+$app->get('/subscription', function ($request, $response) {
+    return $this->view->render($response, 'subscriber/index.twig');
+})->add(new SubscriberMiddleware($container));
