@@ -16,6 +16,7 @@
                 <div class="form-group">
                     <button type="submit" class="btn btn-primary">Edit note</button>
                  </div>
+                <input type="hidden" name="_METHOD" value="PUT">
             	{{ csrf.field | raw }}
 			</form>
 {% else %}

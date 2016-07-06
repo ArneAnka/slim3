@@ -138,6 +138,7 @@ class NoteController extends Controller
         $note->save();
 
         $this->flash->addMessage('success', 'Your note has been saved!');
+        unset($_SESSION['old']);
 
         return $response->withRedirect($this->router->pathFor('notes'));
 

@@ -12,6 +12,12 @@ class ValidationErrorsMiddleware extends Middleware
 	        unset($_SESSION['errors']);
         }
 
+        if(false === $request->getAttribute('csrf_status')){
+            return $response->withStatus(500)
+                            ->withHeader('Content-Type', 'text/html')
+                            ->write('Something went wrong!');
+        }
+
         $response = $next($request, $response);
         return $response;
 

@@ -44,7 +44,7 @@ $app->group('', function () {
     $this->post('/notes', 'NoteController:newNote')->setName('new.note');
     
     $this->get('/notes/{note_id:[0-9]+}', 'NoteController:getEditNote');
-    $this->post('/notes/{note_id:[0-9]+}', 'NoteController:postEditNote')->setName('edit.note');
+    $this->put('/notes/{note_id:[0-9]+}', 'NoteController:postEditNote')->setName('edit.note');
     $this->get('/notes/deleteNote/{note_id:[0-9]+}', 'NoteController:deleteNote')->setName('delete.note');
 })->add(new AuthMiddleware($container));
 

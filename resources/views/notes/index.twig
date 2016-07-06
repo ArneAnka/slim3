@@ -9,7 +9,7 @@
            <form method="POST" action="{{ path_for('new.note') }}" autocomplete="off">
                 <div class="form-group{{ errors.note_text ? ' has-error' : '' }}">
                     <label for="note_text">Enter your note text</label>
-                    <input type="text" name="note_text" id="note_text" class="form-control" value="{{ note.note_text }}">
+                    <input type="text" name="note_text" id="note_text" class="form-control" value="{{ old.note_text }}">
                     {% if errors.note_text %}
                         <span class="help-block">{{ errors.note_text | first }}</span>
                     {% endif %}
